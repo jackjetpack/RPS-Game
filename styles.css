@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, sans-serif, sans-serif;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    color: rgb(13, 62, 46);
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#result {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
