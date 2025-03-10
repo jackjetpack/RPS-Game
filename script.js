@@ -45,6 +45,7 @@ function playGame(playerChoice) {
 function animateChoices(playerChoice, computerChoice, playerWins) {
     const playerChoiceAnimation = document.getElementById("player-choice-animation");
     const computerChoiceAnimation = document.getElementById("computer-choice-animation");
+    const fightAnimation = document.getElementById("fight-animation");
 
     playerChoiceAnimation.style.backgroundImage = `url(${getImagePath(playerChoice)})`;
     computerChoiceAnimation.style.backgroundImage = `url(${getImagePath(computerChoice)})`;
@@ -56,19 +57,25 @@ function animateChoices(playerChoice, computerChoice, playerWins) {
     computerChoiceAnimation.style.animation = "moveToCenterComputer 1s forwards";
 
     setTimeout(() => {
-        playerChoiceAnimation.style.animation = "fightingAnimation 1s forwards";
-        computerChoiceAnimation.style.animation = "fightingAnimation 1s forwards";
+        playerChoiceAnimation.style.opacity = 0;
+        computerChoiceAnimation.style.opacity = 0;
+        fightAnimation.style.backgroundImage = `url(images/fight.gif)`;
+        fightAnimation.style.opacity = 1;
+        console.log("Fight GIF should be visible now");
     }, 1000);
 
     setTimeout(() => {
+        fightAnimation.style.opacity = 0;
         if (playerWins) {
+            playerChoiceAnimation.style.backgroundImage = `url(${getImagePath(playerChoice)})`;
+            playerChoiceAnimation.style.opacity = 1;
             playerChoiceAnimation.style.animation = "winnerAnimation 0.5s forwards";
-            computerChoiceAnimation.style.opacity = 0;
         } else {
+            computerChoiceAnimation.style.backgroundImage = `url(${getImagePath(computerChoice)})`;
+            computerChoiceAnimation.style.opacity = 1;
             computerChoiceAnimation.style.animation = "winnerAnimation 0.5s forwards";
-            playerChoiceAnimation.style.opacity = 0;
         }
-    }, 2000);
+    }, 4000);
 }
 
 document.getElementById("rock").addEventListener("click", (event) => handleButtonClick(event, "rock"));
