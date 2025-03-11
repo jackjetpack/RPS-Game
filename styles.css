@@ -48,11 +48,14 @@ button.clicked {
 #animation-container {
     position: relative;
     width: 400px;
-    height: 200px;
+    height: 300px;
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#player-choice-animation, #computer-choice-animation, #fight-animation {
+#player-choice-animation, #computer-choice-animation {
     position: absolute;
     width: 100px;
     height: 100px;
@@ -66,31 +69,33 @@ button.clicked {
     opacity: 0;
 }
 
-#player-choice-animation {
-    left: 0;
-}
-
-#computer-choice-animation {
-    right: 0;
-}
-
 #fight-animation {
+    position: absolute;
     left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px; /* Adjust the width to make the GIF larger */
+    height: 320px; /* Adjust the height to make the GIF larger */
+    display: none;
 }
 
 @keyframes moveToCenterPlayer {
-    0% { transform: translateX(0); opacity: 1; }
-    100% { transform: translateX(150px); opacity: 1; }
+    0% { transform: translateX(-150px); opacity: 1; }
+    100% { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes moveToCenterComputer {
-    0% { transform: translateX(0); opacity: 1; }
-    100% { transform: translateX(-150px); opacity: 1; }
+    0% { transform: translateX(150px); opacity: 1; }
+    100% { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes winnerAnimation {
     0% { transform: scale(1); }
+    100% { transform: scale(1.5); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1.5); }
+    50% { transform: scale(1.7); }
     100% { transform: scale(1.5); }
 }
