@@ -36,10 +36,14 @@ function playGame(playerChoice) {
 
         document.getElementById("player-score").textContent = playerScore;
         document.getElementById("computer-score").textContent = computerScore;
-        document.getElementById("result").textContent = result;
 
         console.log("Calling animateChoices");
         animateChoices(playerChoice, computerChoice, result.includes("win"));
+
+        // Delay the display of the result text until after the fighting animation finishes
+        setTimeout(() => {
+            document.getElementById("result").textContent = result;
+        }, 3000); // Adjust the delay to match the duration of the fighting animation
     }, 1000);
 }
 
