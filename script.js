@@ -30,7 +30,7 @@ function playGame(playerChoice) {
             result = `You win! ${capitalizeFirstLetter(playerChoice)} beats ${capitalizeFirstLetter(computerChoice)}.`;
             playerScore++;
         } else {
-            result = `You lose! ${capitalizeFirstLetter(computerChoice)} beats ${capitalizeFirstLetter(playerChoice)}.`;
+            result = `You lose... ${capitalizeFirstLetter(computerChoice)} beats ${capitalizeFirstLetter(playerChoice)}.`;
             computerScore++;
         }
 
@@ -38,6 +38,7 @@ function playGame(playerChoice) {
         document.getElementById("computer-score").textContent = computerScore;
         document.getElementById("result").textContent = result;
 
+        console.log("Calling animateChoices");
         animateChoices(playerChoice, computerChoice, result.includes("win"));
     }, 1000);
 }
@@ -47,12 +48,25 @@ function animateChoices(playerChoice, computerChoice, playerWins) {
     const computerChoiceAnimation = document.getElementById("computer-choice-animation");
     const fightAnimation = document.getElementById("fight-animation");
 
+    console.log("Animating choices");
+
     playerChoiceAnimation.style.backgroundImage = `url(${getImagePath(playerChoice)})`;
     computerChoiceAnimation.style.backgroundImage = `url(${getImagePath(computerChoice)})`;
 
     playerChoiceAnimation.style.opacity = 1;
     computerChoiceAnimation.style.opacity = 1;
 
+    // Reset animation properties
+    playerChoiceAnimation.style.animation = "none";
+    computerChoiceAnimation.style.animation = "none";
+
+    // Force reflow to restart animations
+    void playerChoiceAnimation.offsetWidth;
+    void computerChoiceAnimation.offsetWidth;
+
+    // Apply animations
+    playerChoiceAnimation.style.display = "flex"; // Ensure the element is visible
+    computerChoiceAnimation.style.display = "flex"; // Ensure the element is visible
     playerChoiceAnimation.style.animation = "moveToCenterPlayer 1s forwards";
     computerChoiceAnimation.style.animation = "moveToCenterComputer 1s forwards";
 
@@ -91,7 +105,35 @@ function handleButtonClick(event, choice) {
     const button = event.target;
     button.classList.add("clicked");
     setTimeout(() => button.classList.remove("clicked"), 300); // Remove after animation
+
+    // Reset animations and images
+    resetAnimationsAndImages();
+
     playGame(choice);
+}
+
+function resetAnimationsAndImages() {
+    const playerChoiceAnimation = document.getElementById("player-choice-animation");
+    const computerChoiceAnimation = document.getElementById("computer-choice-animation");
+    const fightAnimation = document.getElementById("fight-animation");
+
+    playerChoiceAnimation.style.opacity = 0;
+    computerChoiceAnimation.style.opacity = 0;
+    playerChoiceAnimation.style.display = "none";
+    computerChoiceAnimation.style.display = "none";
+    fightAnimation.style.display = "none";
+
+    // Reset animation properties
+    playerChoiceAnimation.style.animation = "none";
+    computerChoiceAnimation.style.animation = "none";
+
+    // Force reflow to restart animations
+    void playerChoiceAnimation.offsetWidth;
+    void computerChoiceAnimation.offsetWidth;
+
+    // Reset background images
+    playerChoiceAnimation.style.backgroundImage = "";
+    computerChoiceAnimation.style.backgroundImage = "";
 }
 
 // Reference to the reset button
@@ -117,21 +159,5 @@ resetButton.addEventListener("click", function() {
     computerChoiceDisplay.textContent = "?";
 
     // Reset animations and images
-    playerChoiceAnimation.style.opacity = 0;
-    computerChoiceAnimation.style.opacity = 0;
-    playerChoiceAnimation.style.display = "none";
-    computerChoiceAnimation.style.display = "none";
-    fightAnimation.style.display = "none";
-
-    // Reset animation properties
-    playerChoiceAnimation.style.animation = "none";
-    computerChoiceAnimation.style.animation = "none";
-
-    // Force reflow to restart animations
-    void playerChoiceAnimation.offsetWidth;
-    void computerChoiceAnimation.offsetWidth;
-
-    // Reset background images
-    playerChoiceAnimation.style.backgroundImage = "";
-    computerChoiceAnimation.style.backgroundImage = "";
+    resetAnimationsAndImages();
 });

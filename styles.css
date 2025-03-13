@@ -32,7 +32,7 @@ button {
 }
 
 button:active {
-    transform: scale(0.95); /* Shrinks slightly when clicked */
+    transform: scale(0.85); /* Shrinks slightly when clicked */
 }
 
 button.clicked {
