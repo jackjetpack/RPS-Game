@@ -1,6 +1,7 @@
 const choices = ["rock", "paper", "scissors"];
 let playerScore = 0;
 let computerScore = 0;
+let isGameInProgress = false; // Flag to track if a game is in progress
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -42,6 +43,11 @@ function playGame(playerChoice) {
             document.getElementById("result").textContent = result;
             document.getElementById("player-score").textContent = playerScore;
             document.getElementById("computer-score").textContent = computerScore;
+
+            // Re-enable the buttons after the animations and updates are complete
+            enableButtons();
+            enableResetButton();
+            isGameInProgress = false;
         }, 3000); // Adjust the delay to match the duration of the fighting animation
     }, 1000);
 }
@@ -105,6 +111,12 @@ document.getElementById("paper").addEventListener("click", (event) => handleButt
 document.getElementById("scissors").addEventListener("click", (event) => handleButtonClick(event, "scissors"));
 
 function handleButtonClick(event, choice) {
+    if (isGameInProgress) return; // Prevent interaction if a game is in progress
+
+    isGameInProgress = true; // Set the flag to indicate a game is in progress
+    disableButtons(); // Disable the buttons to prevent spamming
+    disableResetButton(); // Disable the reset button to prevent breaking the game
+
     const button = event.target;
     button.classList.add("clicked");
     setTimeout(() => button.classList.remove("clicked"), 300); // Remove after animation
@@ -139,6 +151,30 @@ function resetAnimationsAndImages() {
     computerChoiceAnimation.style.backgroundImage = "";
 }
 
+// Disable the choice buttons
+function disableButtons() {
+    document.getElementById("rock").disabled = true;
+    document.getElementById("paper").disabled = true;
+    document.getElementById("scissors").disabled = true;
+}
+
+// Enable the choice buttons
+function enableButtons() {
+    document.getElementById("rock").disabled = false;
+    document.getElementById("paper").disabled = false;
+    document.getElementById("scissors").disabled = false;
+}
+
+// Disable the reset button
+function disableResetButton() {
+    document.getElementById("reset").disabled = true;
+}
+
+// Enable the reset button
+function enableResetButton() {
+    document.getElementById("reset").disabled = false;
+}
+
 // Reference to the reset button
 const resetButton = document.getElementById("reset");
 
@@ -153,6 +189,8 @@ const fightAnimation = document.getElementById("fight-animation");
 
 // Reset Button Functionality
 resetButton.addEventListener("click", function() {
+    if (isGameInProgress) return; // Prevent reset if a game is in progress
+
     // Reset scores and UI
     playerScore = 0;
     computerScore = 0;
@@ -163,4 +201,8 @@ resetButton.addEventListener("click", function() {
 
     // Reset animations and images
     resetAnimationsAndImages();
+
+    // Re-enable the buttons
+    enableButtons();
+    isGameInProgress = false;
 });
