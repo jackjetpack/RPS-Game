@@ -6,8 +6,8 @@ body {
     align-items: center; /* Center everything horizontally */
     height: 100vh;
     margin: 0;
-    background-image: linear-gradient(to bottom left, rgb(39, 46, 181), rgb(17, 163, 230));
-    color: rgb(226, 95, 47);
+    background-image: linear-gradient(to bottom left, rgb(12, 100, 12), rgb(11, 173, 76));
+    color: rgb(235, 235, 235);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for better readability */
 }
 
@@ -99,4 +99,9 @@ button.clicked {
     0% { transform: scale(1.5); }
     50% { transform: scale(1.7); }
     100% { transform: scale(1.5); }
+}
+
+/* Add this block to change the scoreboard text color */
+#player-score, #computer-score, #computer-choice, #player-choice {
+    color: #FFD700; /* Example color: Gold */
 }

@@ -21,7 +21,7 @@ function playGame(playerChoice) {
         
         let result;
         if (playerChoice === computerChoice) {
-            result = "It's a tie! Try again!";
+            result = "It's a tie!";
         } else if (
             (playerChoice === "rock" && computerChoice === "scissors") ||
             (playerChoice === "scissors" && computerChoice === "paper") ||
@@ -30,19 +30,18 @@ function playGame(playerChoice) {
             result = `You win! ${capitalizeFirstLetter(playerChoice)} beats ${capitalizeFirstLetter(computerChoice)}.`;
             playerScore++;
         } else {
-            result = `You lose... ${capitalizeFirstLetter(computerChoice)} beats ${capitalizeFirstLetter(playerChoice)}.`;
+            result = `You lose! ${capitalizeFirstLetter(computerChoice)} beats ${capitalizeFirstLetter(playerChoice)}.`;
             computerScore++;
         }
-
-        document.getElementById("player-score").textContent = playerScore;
-        document.getElementById("computer-score").textContent = computerScore;
 
         console.log("Calling animateChoices");
         animateChoices(playerChoice, computerChoice, result.includes("win"));
 
-        // Delay the display of the result text until after the fighting animation finishes
+        // Delay the display of the result text and scoreboard update until after the fighting animation finishes
         setTimeout(() => {
             document.getElementById("result").textContent = result;
+            document.getElementById("player-score").textContent = playerScore;
+            document.getElementById("computer-score").textContent = computerScore;
         }, 3000); // Adjust the delay to match the duration of the fighting animation
     }, 1000);
 }
